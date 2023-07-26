@@ -1,6 +1,7 @@
 {
   "author": "Asaf Gilboa",
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
     "@types/mongoose": "^5.11.97",
     "ajv": "^8.12.0",
