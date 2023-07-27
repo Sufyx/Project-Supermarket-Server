@@ -9,9 +9,9 @@ const bcrypt = require("bcrypt");
 
 
 
-function confirmPasswordsMatch(req: Request, res: Response, next: NextFunction) {
+function confirmPassword(req: Request, res: Response, next: NextFunction) {
   if (req.body.password !== req.body.passwordConfirm) {
-    // console.log("Passwords do not match");
+    console.log("Passwords do not match");
     res.status(400).send("Passwords don't match");
     return;
   }
@@ -74,6 +74,6 @@ async function verifyPassword(req: Request, res: Response, next: NextFunction) {
 
 
 module.exports = {
-  confirmPasswordsMatch, isUserNew, encryptPassword,
+  confirmPassword, isUserNew, encryptPassword,
   isUserInDB, verifyPassword,
 };
