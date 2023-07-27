@@ -24,8 +24,10 @@ async function getUsers(req: Request, res: Response) {
 async function signUp(req: Request, res: Response) {
     try {
         const newUser = {...req.body};
+        delete newUser.passwordConfirm;
         const userId = await signUpModel(newUser);
         newUser["userId"] = userId;
+        delete newUser.password;
         // const token = jwt.sign(
         //     { id: userId }, 
         //     process.env.TOKEN_KEY, 

@@ -14,8 +14,8 @@ const {
 
 router.get("/getUsers", UsersController.getUsers);
 
-router.post("/signup", validateBody(signUpSchema), confirmPassword, 
-// isUserNew, encryptPassword, 
+router.post("/signup", validateBody(signUpSchema), 
+confirmPassword, isUserNew, encryptPassword, 
 UsersController.signUp);
 
 
