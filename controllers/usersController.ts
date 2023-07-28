@@ -26,7 +26,7 @@ async function signUp(req: Request, res: Response) {
         const newUser = {...req.body};
         delete newUser.passwordConfirm;
         const userId = await signUpModel(newUser);
-        newUser["userId"] = userId;
+        newUser["id"] = userId;
         delete newUser.password;
         // const token = jwt.sign(
         //     { id: userId }, 

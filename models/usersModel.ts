@@ -23,7 +23,7 @@ async function getUserByEmailModel(email: string) {
       const user = await User.findOne({ email: email });
       return user;
     } catch (err: any) {
-      console.error("Users model getUserByEmailModel: ", err.message);
+      console.error("getUserByEmailModel error: ", err.message);
     }
   }
 
@@ -34,7 +34,7 @@ async function getUserByEmailModel(email: string) {
       user!.password = "";
       return user;
     } catch (err: any) {
-      console.error("Users model getUserByIdModel: ", err.message);
+      console.error("getUserByIdModel error: ", err.message);
     }
   }
 
@@ -46,7 +46,7 @@ async function getUserByEmailModel(email: string) {
       const userId = newUser._id;
       return userId;
     } catch (err: any) {
-      console.error("Users model signUpModel: ", err.message);
+      console.error("signUpModel error: ", err.message);
     }
   }
 
