@@ -56,7 +56,6 @@ async function isUserInDB(req: Request, res: Response, next: NextFunction) {
 
 async function verifyPassword(req: Request, res: Response, next: NextFunction) {
   const { user } = req.body;
-
   bcrypt.compare(req.body.password, user.password, (err: { message: any; }, result: boolean) => {
     if (err) {
       console.log("verifyPassword error > ", err.message);

@@ -5,7 +5,7 @@
 import { Request, Response } from "express";
 // const jwt = require("jsonwebtoken");
 const {
-    getUsersModel, signUpModel
+    getUsersModel, signUpModel, getUserByEmailModel
 } = require("../models/usersModel");
 
 
@@ -41,6 +41,25 @@ async function signUp(req: Request, res: Response) {
 }
 
 
+async function signIn(req: Request, res: Response) {
+    try {
+        const { email } = req.body.user;
+        const user = await getUserByEmailModel(email);
+        delete user.password;
+        // const payload = { id: user._id };
+        // const token = jwt.sign(
+        //     payload,
+        //     process.env.TOKEN_KEY,
+        //     { expiresIn: "5h" });
+        // res.send({ token: token, user: user });
+        res.send({ user: user });
+    } catch (err) {
+        console.error("User controller login: ", err);
+        res.status(500).send(err);
+    }
+}
+
+
 module.exports = {
-    getUsers, signUp
+    getUsers, signUp, signIn
 };

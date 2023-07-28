@@ -18,6 +18,17 @@ const signUpSchema = {
   }
 
 
+  const signInSchema = {
+    type: "object",
+    properties: {
+      email: { type: "string", minLength: 5 },
+      password: { type: "string", minLength: 4 },
+    },
+    required: ["email", "password"],
+    additionalProperties: false
+  }
+
+
   module.exports = {
-    signUpSchema
+    signUpSchema, signInSchema
   }
