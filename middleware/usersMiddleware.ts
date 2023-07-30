@@ -3,7 +3,7 @@
 */
 
 
-const { getUserByEmailModel } = require("../models/usersModel");
+import { getUserByEmailModel } from "../models/usersModel";
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
 

@@ -17,7 +17,8 @@ export async function getUsersModel() {
   }
 }
 
-export async function getUserByEmailModel(email: string): Promise<UserDocument | null> {
+export async function getUserByEmailModel(email: string):
+  Promise<UserDocument | null> {
   return await User.findOne({ email: email });
 }
 

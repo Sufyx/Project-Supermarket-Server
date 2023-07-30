@@ -6,7 +6,7 @@
 import Product, { ProductDocument } from "../schemas/Product"
 
 
-async function getProductsModel() {
+export async function getProductsModel() {
     try {
         const res = await Product.find();
         return [...res];
@@ -15,8 +15,3 @@ async function getProductsModel() {
     }
 }
 
-
-
-module.exports = {
-    getProductsModel
-};

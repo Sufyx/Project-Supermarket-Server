@@ -6,12 +6,11 @@
 
 import express, { Request, Response } from "express";
 import cors from "cors";
-require("dotenv").config();
-const mongoose = require('mongoose');
-// const productsRoute = require("./routes/productsRoute");
-// const usersRoute = require("./routes/usersRoute");
+import mongoose from 'mongoose';
 import usersRoute from './routes/usersRoute';
 import productsRoute from './routes/productsRoute';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const PORT = process.env.PORT || 7070;
 const app = express();
@@ -23,9 +22,9 @@ app.use("/products", productsRoute);
 app.use("/users", usersRoute);
 
 mongoose
-    .connect(process.env.URI, 
-        { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
+    .connect(process.env.URI as string
+        // ,{ useNewUrlParser: true, useUnifiedTopology: true }
+        ).then(() => {
         console.log(`Database connected`);
         app.listen(PORT, () => {
             console.log(`Listening on: ${PORT}`);

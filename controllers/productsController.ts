@@ -3,11 +3,9 @@
  */
 
 import { Request, Response } from "express";
-const {
-    getProductsModel
-} = require("../models/productsModel");
+import { getProductsModel } from "../models/productsModel";
 
-async function getProducts(req: Request, res: Response) {
+export async function getProducts(req: Request, res: Response) {
     try {
         const products = await getProductsModel();
         res.send({ products });
@@ -16,8 +14,3 @@ async function getProducts(req: Request, res: Response) {
         res.status(500).send(err);
     }
 }
-
-
-module.exports = {
-    getProducts
-};

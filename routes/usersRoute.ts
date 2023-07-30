@@ -2,20 +2,19 @@
  * 
  */
 
-const express = require("express");
-const router = express.Router();
+import express from "express";
 import * as usersCtrl from "../controllers/usersController";
 import { validateBody } from "../middleware/validateBody";
 import { signUpSchema, signInSchema } from "../schemas/validationSchemas";
 import { 
     confirmPassword, isUserNew, isUserInDB, verifyPassword 
 } from "../middleware/usersMiddleware";
-//const ... = validateBody(signUpSchema)
-// consistency with middleware naming (validateNewUser)
+const router = express.Router();
+const validateSchema = validateBody(signUpSchema)
 
 router.get("/getUsers", usersCtrl.getUsers);
 
-router.post("/signUp", validateBody(signUpSchema),
+router.post("/signUp", validateSchema,
     confirmPassword, isUserNew, usersCtrl.signUp);
 
 router.post("/signIn", validateBody(signInSchema),
