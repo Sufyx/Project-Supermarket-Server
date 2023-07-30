@@ -4,22 +4,22 @@
 
 const express = require("express");
 const router = express.Router();
-const UsersController = require("../controllers/usersController");
-const { validateBody } = require("../middleware/validateBody");
-const {signUpSchema, signInSchema } = require("../schemas/validationSchemas");
-const {
-    confirmPassword, isUserNew, isUserInDB, encryptPassword, verifyPassword
-} = require("../middleware/usersMiddleware");
+import * as usersCtrl from "../controllers/usersController";
+import { validateBody } from "../middleware/validateBody";
+import { signUpSchema, signInSchema } from "../schemas/validationSchemas";
+import { 
+    confirmPassword, isUserNew, isUserInDB, verifyPassword 
+} from "../middleware/usersMiddleware";
+//const ... = validateBody(signUpSchema)
+// consistency with middleware naming (validateNewUser)
 
+router.get("/getUsers", usersCtrl.getUsers);
 
-router.get("/getUsers", UsersController.getUsers);
+router.post("/signUp", validateBody(signUpSchema),
+    confirmPassword, isUserNew, usersCtrl.signUp);
 
-router.post("/signup", validateBody(signUpSchema), 
-confirmPassword, isUserNew, encryptPassword, 
-UsersController.signUp);
-
-router.post("/signin", validateBody(signInSchema),
-    isUserInDB, verifyPassword, UsersController.signIn);
+router.post("/signIn", validateBody(signInSchema),
+    isUserInDB, verifyPassword, usersCtrl.signIn);
 
 
 export default router;

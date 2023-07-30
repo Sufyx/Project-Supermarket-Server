@@ -3,13 +3,12 @@
 */
 
 import { Request, Response, NextFunction } from "express";
-import Ajv, {JSONSchemaType} from "ajv";
-import { UserDocument } from "../schemas/User"
+import Ajv, { JSONSchemaType, Schema } from "ajv";
 const ajv = new Ajv();
+import addFormats from "ajv-formats";
+addFormats(ajv);
 
-
-
-function validateBody(schema: any) {
+export function validateBody<T>(schema: Schema | JSONSchemaType<T>) {
   return (req: Request, res: Response, next: NextFunction) => {
     let userId = '';
     if (req.body.userId) {
@@ -27,5 +26,3 @@ function validateBody(schema: any) {
     next();
   };
 }
-
-module.exports = { validateBody }
