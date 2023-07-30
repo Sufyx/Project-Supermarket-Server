@@ -3,8 +3,8 @@
  */
 
 import express from "express";
-const router = express.Router();
 import * as ProductsCtrl from "../controllers/productsController";
+const router = express.Router();
 
 
 router.get("/getProducts", ProductsCtrl.getProducts);
