@@ -7,7 +7,7 @@ import * as usersCtrl from "../controllers/usersController";
 import { validateBody } from "../middleware/validateBody";
 import { signUpSchema, signInSchema } from "../schemas/validationSchemas";
 import { 
-    confirmPassword, isUserNew, isUserInDB, verifyPassword 
+    confirmPassword, isUserNew, isUserInDB, verifyPassword
 } from "../middleware/usersMiddleware";
 
 const router = express.Router();

@@ -3,10 +3,9 @@
  */
 
 import { Request, Response } from "express";
-import { encryptPassword } from "../middleware/usersMiddleware";
-// const jwt = require("jsonwebtoken");
 import { getUsersModel, signUpModel, getUserByEmailModel } from "../models/usersModel";
-import { MapUserToDto, UserDto } from "../schemas/User";
+import { encryptPassword, getToken } from "../utilities/utils";
+import { MapUserToDto } from "../schemas/User";
 
 
 
@@ -31,12 +30,8 @@ export async function signUp(req: Request, res: Response) {
         const userId = await signUpModel(newUser);
         newUser["id"] = userId;
         delete newUser.password;
-        // const token = jwt.sign(
-        //     { id: userId }, 
-        //     process.env.TOKEN_KEY, 
-        //     { expiresIn: "5h" });
-        // res.send({ token: token, user: newUser });
-        res.send({ user: newUser });
+        const token = getToken({ id: userId });
+        res.send({ token: token, user: newUser });
     } catch (err) {
         console.error("User controller signUp: ", err);
         res.status(500).send(err);
