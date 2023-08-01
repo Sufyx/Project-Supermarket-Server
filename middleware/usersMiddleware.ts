@@ -4,6 +4,7 @@
 
 
 import { getUserByEmailModel } from "../models/usersModel";
+import { verifyToken } from "../utilities/utils";
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
 
@@ -42,9 +43,30 @@ export async function verifyPassword(req: Request, res: Response, next: NextFunc
   const { user } = req.body;
   const result = await bcrypt.compare(req.body.password, user.password);
   if (result) {
-      next();
-      return;
+    next();
+    return;
   } else {
-      res.status(400).send("Incorrect Password");
+    res.status(400).send("Incorrect Password");
+  }
+}
+
+
+export async function checkAuth(req: Request, res: Response, next: NextFunction) {
+  try {
+    let token = req.headers.authorization;
+    if (!token) {
+      res.status(401).send("Authorization headers required");
+      return;
+    }
+    token = token.replace("Bearer ", "");
+    const userId = verifyToken(token);
+    if (userId) {
+      req.body.userId = userId;
+      next();
+    } else {
+      res.status(401).send("Unauthorized");
+    }
+  } catch (error) {
+    res.status(401).send("Authorization error");
   }
 }

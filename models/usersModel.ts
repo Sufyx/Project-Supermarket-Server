@@ -4,7 +4,7 @@
 
 
 import User, { UserDocument } from "../schemas/User"
-const ObjectId = require('mongodb').ObjectId;
+import { ObjectId } from "mongodb";
 
 
 
@@ -19,10 +19,8 @@ export async function getUserByEmailModel(email: string): Promise<UserDocument |
 }
 
 export async function getUserByIdModel(userId: string): Promise<UserDocument | null> {
-  return await User.findOne({ _id: ObjectId(userId) });
-  // const user = await User.findOne({ _id: ObjectId(userId) });
-  // user!.password = "";
-  // return user;
+  return await User.findOne({ _id: new ObjectId(userId) });
+  // return await User.findOne({ _id: new ObjectId("userId") });
 }
 
 

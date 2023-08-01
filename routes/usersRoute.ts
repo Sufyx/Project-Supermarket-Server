@@ -7,7 +7,8 @@ import * as usersCtrl from "../controllers/usersController";
 import { validateBody } from "../middleware/validateBody";
 import { signUpSchema, signInSchema } from "../schemas/validationSchemas";
 import { 
-    confirmPassword, isUserNew, isUserInDB, verifyPassword
+    confirmPassword, isUserNew, isUserInDB, 
+    verifyPassword, checkAuth
 } from "../middleware/usersMiddleware";
 
 const router = express.Router();
@@ -15,11 +16,15 @@ const validateSchema = validateBody(signUpSchema)
 
 router.get("/getUsers", usersCtrl.getUsers);
 
+router.get("/logged", checkAuth, usersCtrl.stayLoggedIn);
+
 router.post("/signUp", validateSchema,
     confirmPassword, isUserNew, usersCtrl.signUp);
 
 router.post("/signIn", validateBody(signInSchema),
     isUserInDB, verifyPassword, usersCtrl.signIn);
+
+    
 
 
 export default router;
