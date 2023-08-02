@@ -2,6 +2,7 @@
  * 
  */
 
+
 import { Schema, model, Document } from 'mongoose';
 
 export interface UserDocument extends Document {
@@ -16,7 +17,6 @@ export interface UserDocument extends Document {
     creditCards: string[],
 }
 
-export type UserDto = Omit<UserDocument, "password">;
 
 const userSchema: Schema<UserDocument> = new Schema({
     name: String,
@@ -30,12 +30,15 @@ const userSchema: Schema<UserDocument> = new Schema({
     creditCards: [String],
 });
 
-const User = model<UserDocument>('User', userSchema);
 
+export type UserDto = Omit<UserDocument, "password">;
 export function MapUserToDto(user: UserDocument): UserDto {
     const result: any = { ...user };
     delete result.password;
+    delete result.passwordConfirm;
     return result as UserDto;
 }
+
+const User = model<UserDocument>('User', userSchema);
 
 export default User;

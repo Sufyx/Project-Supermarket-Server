@@ -24,9 +24,9 @@ export async function getUserByIdModel(userId: string): Promise<UserDocument | n
 }
 
 
-export async function signUpModel(userToAdd: UserDocument): Promise<string | null> {
+export async function signUpModel(userToAdd: UserDocument): Promise<UserDocument | null> {
   const newUser = new User(userToAdd);
   newUser.save();
-  return newUser._id;
+  return newUser;
 }
 

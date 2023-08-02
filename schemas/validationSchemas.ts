@@ -11,7 +11,7 @@ export const signUpSchema = {
       passwordConfirm: { type: "string", minLength: 4, maxLength: 50 },
       phone: { type: "string", maxLength: 40 },
       role: { type: "string", maxLength: 20 },
-      birthDate: { type: "string", format:"date"},
+      birthDate: { type: "string"},
     },
     required: ["name", "email", "password", "passwordConfirm"],
     additionalProperties: false

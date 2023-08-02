@@ -8,7 +8,7 @@ import {
     getUserByIdModel
 } from "../models/usersModel";
 import { encryptPassword, getToken } from "../utilities/utils";
-import { MapUserToDto } from "../schemas/User";
+import { UserDocument, MapUserToDto } from "../schemas/User"
 
 
 
@@ -25,16 +25,18 @@ export async function getUsers(req: Request, res: Response) {
 
 export async function signUp(req: Request, res: Response) {
     try {
-        const newUser = {
+        const user = {
             ...req.body,
-            password: encryptPassword(req.body.password)
+            password: await encryptPassword(req.body.password)
         };
-        delete newUser.passwordConfirm;
-        const userId = await signUpModel(newUser);
-        newUser["id"] = userId;
-        delete newUser.password;
-        const token = getToken({ id: userId });
-        res.send({ token: token, user: newUser });
+        delete user.passwordConfirm;
+        const newUser = await signUpModel(user);
+        if (newUser == null){
+            throw new Error("an error has occurred while retrieving user data");
+        }
+        const dto = MapUserToDto(newUser);
+        const token = getToken({ id: newUser._id });
+        res.send({ token: token, user: dto });
     } catch (err) {
         console.error("signUp error: ", err);
         res.status(500).send(err);
