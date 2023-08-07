@@ -6,29 +6,29 @@ import { Schema, model, Document } from 'mongoose';
 
 const productSchema = new Schema({
     name: String,
-    tags: [String],
-    categories: [String],
     brand: String,
     description: String,
-    barcode: Number,
+    supplier: String,
     price: Number,
+    barcode: Number,
     quantity: Number,
     lastUpdate: Date,
-    supplier: String,
+    tags: [String],
+    categories: [String],
     images: [String],
 });
 
 export interface ProductDocument extends Document {
     name: string;
-    tags: string[];
-    categories: string[];
     brand: string;
     description: string;
-    barcode: number;
+    supplier: string;
     price: number;
+    barcode: number;
     quantity: number;
     lastUpdate: Date;
-    supplier: string;
+    tags: string[];
+    categories: string[];
     images: string[];
 }
 
