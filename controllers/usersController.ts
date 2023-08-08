@@ -5,8 +5,9 @@
 import { Request, Response } from "express";
 import { 
     getUsersModel, signUpModel, getUserByEmailModel,
-    getUserByIdModel
+    getUserByIdModel, addProductToCartModel
 } from "../models/usersModel";
+// import { getProductById } from "../models/productsModel";
 import { encryptPassword, getToken } from "../utilities/utils";
 import { UserDocument, MapUserToDto } from "../schemas/User"
 
@@ -72,6 +73,19 @@ export async function stayLoggedIn(req: Request, res: Response) {
         res.send({ user: dto });
     } catch (err) {
         console.error("stayLoggedIn error: ", err);
+        res.status(500).send(err);
+    }
+}
+
+
+export async function addProductToCart(req: Request, res: Response) {
+    try {
+        const { userId } = req.body;
+        const { productId } = req.params;
+        const added = await addProductToCartModel(productId, userId);
+        res.send({ added: added });
+    } catch (err) {
+        console.error("addProductToCart error: ", err);
         res.status(500).send(err);
     }
 }

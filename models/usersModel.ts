@@ -10,8 +10,8 @@ import { ObjectId } from "mongodb";
 
 export async function getUsersModel(): Promise<string[] | null> {
   return await User.find();
-    // const res = await User.find();
-    // return [...res];
+  // const res = await User.find();
+  // return [...res];
 }
 
 export async function getUserByEmailModel(email: string): Promise<UserDocument | null> {
@@ -30,3 +30,15 @@ export async function signUpModel(userToAdd: UserDocument): Promise<UserDocument
   return newUser;
 }
 
+export async function addProductToCartModel(productId: string, userId: string): Promise<boolean> {
+  try {
+  const updateResult = await User.updateOne(
+    { _id: userId },
+    { $push: { cart: productId } },
+    { upsert: true }
+  );
+  return (updateResult.modifiedCount === 1);
+  } catch (error) {
+    throw new Error('addProductToCartModel error: ' + error);
+  }
+}

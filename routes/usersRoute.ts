@@ -10,6 +10,7 @@ import {
     confirmPassword, isUserNew, isUserInDB, 
     verifyPassword, checkAuth
 } from "../middleware/usersMiddleware";
+import { isProductAvailable } from "../middleware/productsMiddleware";
 
 const router = express.Router();
 const validateSchema = validateBody(signUpSchema)
@@ -25,6 +26,9 @@ router.post("/signIn", validateBody(signInSchema),
     isUserInDB, verifyPassword, usersCtrl.signIn);
 
     
+router.post("/addProductToCart/:productId", checkAuth, 
+        isProductAvailable, usersCtrl.addProductToCart);
+
 
 
 export default router;
