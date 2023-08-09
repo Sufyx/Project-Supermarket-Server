@@ -11,7 +11,7 @@ const productSchema = new Schema({
     supplier: String,
     price: Number,
     barcode: Number,
-    quantity: Number,
+    stock: Number,
     lastUpdate: Date,
     tags: [String],
     categories: [String],
@@ -25,7 +25,7 @@ export interface ProductDocument extends Document {
     supplier: string;
     price: number;
     barcode: number;
-    quantity: number;
+    stock: number;
     lastUpdate: Date;
     tags: string[];
     categories: string[];

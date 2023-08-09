@@ -15,6 +15,10 @@ export interface UserDocument extends Document {
     orders: string[],
     favorites: string[],
     creditCards: string[],
+    cart: [{
+        productId: string,
+        productAmount: string
+    }]
 }
 
 
@@ -28,7 +32,13 @@ const userSchema: Schema<UserDocument> = new Schema({
     orders: [String],
     favorites: [String],
     creditCards: [String],
-});
+    cart: [{
+        productId: String,
+        productAmount: String
+    }],
+},
+    { id: false }
+);
 
 
 export type UserDto = Omit<UserDocument, "password">;
