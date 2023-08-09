@@ -5,7 +5,7 @@
 import { Request, Response } from "express";
 import { 
     getUsersModel, signUpModel, getUserByEmailModel,
-    getUserByIdModel, addProductToCartModel
+    getUserByIdModel, addProductToCartModel, getUserCartModel
 } from "../models/usersModel";
 // import { getProductById } from "../models/productsModel";
 import { encryptPassword, getToken } from "../utilities/utils";
@@ -81,11 +81,25 @@ export async function stayLoggedIn(req: Request, res: Response) {
 export async function addProductToCart(req: Request, res: Response) {
     try {
         const { userId } = req.body;
-        const { productId } = req.params;
-        const added = await addProductToCartModel(productId, userId);
+        // const { productId } = req.params;
+        const productId = req.query.productId as string;
+        const productAmount = req.query.productAmount as string;
+        const added = await addProductToCartModel(userId, productId, productAmount);
         res.send({ added: added });
     } catch (err) {
         console.error("addProductToCart error: ", err);
+        res.status(500).send(err);
+    }
+}
+
+
+export async function getUserCart(req: Request, res: Response) {
+    try {
+        const { userId } = req.body;
+        const cart = await getUserCartModel(userId);
+        res.send({ cart: cart });
+    } catch (err) {
+        console.error("getUserCart error: ", err);
         res.status(500).send(err);
     }
 }

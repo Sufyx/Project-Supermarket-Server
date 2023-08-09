@@ -12,10 +12,13 @@ export interface UserDocument extends Document {
     phone: string,
     role: string,
     birthDate: Date,
-    cart: string[],
     orders: string[],
     favorites: string[],
     creditCards: string[],
+    cart: [{
+        productId: string,
+        productAmount: string
+    }]
 }
 
 
@@ -26,11 +29,16 @@ const userSchema: Schema<UserDocument> = new Schema({
     phone: String,
     role: String,
     birthDate: Date,
-    cart: [String],
     orders: [String],
     favorites: [String],
     creditCards: [String],
-});
+    cart: [{
+        productId: String,
+        productAmount: String
+    }],
+},
+    { id: false }
+);
 
 
 export type UserDto = Omit<UserDocument, "password">;
