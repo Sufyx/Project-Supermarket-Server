@@ -27,8 +27,6 @@ router.post("/signUp", validateSchema,
 router.post("/signIn", validateBody(signInSchema),
     isUserInDB, verifyPassword, usersCtrl.signIn);
 
-
-// router.post("/addProductToCart",
 router.post("/addProductToCart", checkAuth,
     isProductAvailable, usersCtrl.addProductToCart);
 
