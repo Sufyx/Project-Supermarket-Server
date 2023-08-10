@@ -34,21 +34,25 @@ export async function signUpModel(userToAdd: UserDocument): Promise<UserDocument
 export async function addProductToCartModel(
   userId: string, productId: string, productAmount: string
 ): Promise<boolean> {
-  // console.log("productId = ", productId, " | productAmount = ", productAmount, " | userId = ", userId);
   try {
     const user = await User.findById(userId);
     if (!user) throw new Error('User not found');
 
-    const cartItemIndex = user.cart.findIndex(
+    const cart: [{ productId: string; productAmount: string; }] = [...user.cart];
+    
+    const cartItemIndex = cart.findIndex(
       (item) => item.productId.toString() === productId
     );
 
     if (cartItemIndex !== -1)
-      user.cart[cartItemIndex].productAmount = productAmount;
+      cart[cartItemIndex].productAmount = productAmount;
     else
-      user.cart.push({ productId, productAmount });
+      cart.push({ productId, productAmount });
 
+    if (Number(productAmount) <= 0)
+      cart.splice(cartItemIndex, 1);
 
+    user.cart = [...cart];
     const updateResult = await user.save();
 
     return updateResult ? true : false;
