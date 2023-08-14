@@ -66,8 +66,8 @@ export async function getUserCartModel(userId: string):
   Promise<ProductDocument[] | null> {
 
   const user = await getUserByIdModel(userId);
-  if (!user) throw new Error('User not found');
-  if (!user.cart) return [];
+  // if (!user) throw new Error('User not found');
+  if (!user || !user.cart) return [];
 
   const userCart: ProductDocument[] = [];
   for (let i = 0; i < user.cart.length; i++) {
